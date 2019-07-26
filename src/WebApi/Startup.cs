@@ -1,16 +1,31 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.IO;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace WebApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private bool _useSwagger;
+        private const string ApiName = "tracker-webapi";
+        private string ApiVersion;
+        private const string codeDocumentation = "WebApi.xml";
+
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+
+            _useSwagger = Configuration.GetValue<bool>("UseSwagger", env.IsDevelopment());
+            Console.WriteLine($"Using Swagger Interface: {_useSwagger}");
+
+            Console.WriteLine($"Role: {ApiName}.");
+            ApiVersion = System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString();
+            Console.WriteLine($"Version: {ApiVersion}.");
         }
 
         public IConfiguration Configuration { get; }
@@ -19,6 +34,33 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            if (_useSwagger)
+            {
+                // Register the Swagger generator, defining one or more Swagger documents
+                services.AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = ApiName, Version = $"V{ApiVersion}" });
+
+                });
+
+                services.ConfigureSwaggerGen(options =>
+                {
+                    //Set the comments path for the swagger json and ui.
+                    var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                    var xmlPath = Path.Combine(basePath, codeDocumentation);
+
+                    if (File.Exists(xmlPath))
+                    {
+                        options.IncludeXmlComments(xmlPath);
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine(string.Format("File {0} not found", xmlPath));
+                    }
+                });
+
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +78,18 @@ namespace WebApi
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            if (_useSwagger)
+            {
+                // Enable middleware to serve generated Swagger as a JSON endpoint.
+                app.UseSwagger();
+
+                // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("v1/swagger.json", $"{ApiName} V{ApiVersion}");
+                });
+            }
         }
     }
 }
