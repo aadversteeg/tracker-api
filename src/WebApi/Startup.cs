@@ -35,6 +35,8 @@ namespace WebApi
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddHealthChecks();
+
             if (_useSwagger)
             {
                 // Register the Swagger generator, defining one or more Swagger documents
@@ -77,7 +79,9 @@ namespace WebApi
             }
 
             app.UseHttpsRedirection();
+            app.UseHealthChecks("/health");
             app.UseMvc();
+
 
             if (_useSwagger)
             {
