@@ -6,6 +6,8 @@
     <UserSecretsId>953ba30d-d058-4caa-83a8-7a56a56638ee</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <Version>1.0.1</Version>
+    <ApplicationInsightsResourceId>/subscriptions/1b62afca-95ff-4c9f-be6e-e565a41d8ebe/resourcegroups/versteeg-its/providers/microsoft.insights/components/ai-prod-vits</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/1b62afca-95ff-4c9f-be6e-e565a41d8ebe/resourcegroups/versteeg-its/providers/microsoft.insights/components/ai-prod-vits</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -22,6 +24,7 @@
     <PackageReference Include="CSharpFunctionalExtensions" Version="1.19.0" />
     <PackageReference Include="MediatR" Version="7.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.5.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.HealthChecks" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
@@ -38,7 +41,12 @@
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
     <ProjectReference Include="..\Extension\Extension.csproj" />
+    <ProjectReference Include="..\Infrastructure.ApplicationInsights\Infrastructure.ApplicationInsights.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
 </Project>

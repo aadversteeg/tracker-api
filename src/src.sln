@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.EntityFramew
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.EntityFramework.InMemory", "Infrastructure.EntityFramework.InMemory\Infrastructure.EntityFramework.InMemory.csproj", "{7B415733-2736-4C01-B231-EC699AD086D8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.ApplicationInsights", "Infrastructure.ApplicationInsights\Infrastructure.ApplicationInsights.csproj", "{48667460-E4F5-401D-A98F-85596EE83985}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +64,10 @@ Global
 		{7B415733-2736-4C01-B231-EC699AD086D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B415733-2736-4C01-B231-EC699AD086D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B415733-2736-4C01-B231-EC699AD086D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48667460-E4F5-401D-A98F-85596EE83985}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48667460-E4F5-401D-A98F-85596EE83985}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48667460-E4F5-401D-A98F-85596EE83985}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48667460-E4F5-401D-A98F-85596EE83985}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
